@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment</title>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <div class="content">
+        @{
+            Random rand = new Random();
+            int[,] arr = new int[3, 3];
+        }
+        <table>
+            @* Creating a nested for loop in order to generate the array contents *@
+            @for(int i = 0; i < 3; i++)
+            {
+                @for(int j = 0; j < 3; j++)
+                {
+                    int result = rand.Next(1, 100);
+                    // If the random number is divisible by 5 we'll just add 1 to it so it isn't anymore
+                    if(result % 5 == 0)
+                    {
+                        result = result + 1;
+                    }
+                    arr[i, j] = result;
+                    @* If i and j both equal 2, we are at the end of the loops and the numbers have all been determined *@
+                    if(i == 2 && j == 2)
+                    {
+                        @* We'll calculate the row and column totals and grand total *@
+                        int r1Sum = arr[0, 0] + arr[0, 1] + arr[0, 2];
+                        int r2Sum = arr[1, 0] + arr[1, 1] + arr[1, 2];
+                        int r3Sum = arr[2, 0] + arr[2, 1] + arr[2, 2];
+                        int col1Sum = arr[0, 0] + arr[1, 0] + arr[2, 0];
+                        int col2Sum = arr[0, 1] + arr[1, 1] + arr[2, 1];
+                        int col3Sum = arr[0, 2] + arr[1, 2] + arr[2, 2];
+                        int gTotal = col1Sum + col2Sum + col3Sum;
+
+                        @* If the row or column totals or grand total are divisible by 5, we'll reset i and j to restart the loop until the totals aren't divisible by 5 *@
+                        if(r1Sum % 5 == 0 || r2Sum % 5 == 0 || r3Sum % 5 == 0 || col1Sum % 5 == 0 || col2Sum % 5 == 0 || col3Sum % 5 == 0 || gTotal % 5 == 0)
+                        {
+                            i = 0;
+                            j = 0;
+                        }
+                    }
+                }
+            }
+        @* Now that the totals have fit the requirements, we'll calculate them outside of the loop so we can display them on the page *@
+        @{
+            int row1Sum = arr[0, 0] + arr[0, 1] + arr[0, 2];
+            int row2Sum = arr[1, 0] + arr[1, 1] + arr[1, 2];
+            int row3Sum = arr[2, 0] + arr[2, 1] + arr[2, 2];
+            int column1Sum = arr[0, 0] + arr[1, 0] + arr[2, 0];
+            int column2Sum = arr[0, 1] + arr[1, 1] + arr[2, 1];
+            int column3Sum = arr[0, 2] + arr[1, 2] + arr[2, 2];
+            int grandTotal = row1Sum + row2Sum + row3Sum;
+
+            @* Doing a series of checks to see how large the row totals are and ordering them via swaps as necessary to get the correct order to display *@
+            if(row1Sum < row2Sum)
+            // Row 1 indexes are stored in temp variables
+            // Swapping the row sums and indexes in case Row 2's sum is larger than Row 1's sum
+            {
+                int temp1 = arr[0, 0];
+                int temp2 = arr[0, 1];
+                int temp3 = arr[0, 2];
+                int temp4 = row2Sum;
+                arr[0, 0] = arr[1, 0];
+                arr[0, 1] = arr[1, 1];
+                arr[0, 2] = arr[1, 2];
+                arr[1, 0] = temp1;
+                arr[1, 1] = temp2;
+                arr[1, 2] = temp3;
+                row2Sum = row1Sum;
+                row1Sum = temp4;
+            }
+
+            if(row2Sum < row3Sum)
+            // Row 2 indexes are stored in temp variables
+            {
+                int temp1 = arr[1, 0];
+                int temp2 = arr[1, 1];
+                int temp3 = arr[1, 2];
+                int temp4 = row3Sum;
+                arr[1, 0] = arr[2, 0];
+                arr[1, 1] = arr[2, 1];
+                arr[1, 2] = arr[2, 2];
+                arr[2, 0] = temp1;
+                arr[2, 1] = temp2;
+                arr[2, 2] = temp3;
+                row3Sum = row2Sum;
+                row2Sum = temp4;
+            }
+
+            if(row1Sum < row2Sum)
+            // Row 1 indexes are stored in temp variables
+            // With Row 2's sum and Row 3's sum checked, we have to go back and compare Row 1 and Row 2 again to make sure everything's in order
+            {
+                int temp1 = arr[0, 0];
+                int temp2 = arr[0, 1];
+                int temp3 = arr[0, 2];
+                int temp4 = row2Sum;
+                arr[0, 0] = arr[1, 0];
+                arr[0, 1] = arr[1, 1];
+                arr[0, 2] = arr[1, 2];
+                arr[1, 0] = temp1;
+                arr[1, 1] = temp2;
+                arr[1, 2] = temp3;
+                row2Sum = row1Sum;
+                row1Sum = temp4;
+            }
+        }
+            @* With everything checked, we can now populate the table data with the numbers *@
+            @for(int i = 0; i < 3; i++)
+            {
+            <tr>
+                @for(int j = 0; j < 3; j++)
+                {
+                    <td>@arr[i, j]</td>
+                }
+            </tr>
+            }
+        </table>
+
+        <p><span class = "bold">Row 1 Total:</span> @row1Sum</p>
+        <p><span class = "bold">Row 2 Total:</span> @row2Sum</p>
+        <p><span class = "bold">Row 3 Total:</span> @row3Sum</p>
+        <p><span class = "bold">Column 1 Total:</span> @column1Sum</p>
+        <p><span class = "bold">Column 2 Total:</span> @column2Sum</p>
+        <p><span class = "bold">Column 3 Total:</span> @column3Sum</p>
+        <p><span class = "bold">Grand Total:</span> @grandTotal</p>
+    </div>
+</body>
+</html>

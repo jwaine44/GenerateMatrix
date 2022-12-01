@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "srgK2bJPu65p4P7eKvOm/a65maWN20vyijG5H8Sokow=",
+  "Source": "LawForumAssessment",
+  "BasePath": "_content/LawForumAssessment",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "LawForumAssessment\\wwwroot",
+      "Source": "LawForumAssessment",
+      "ContentRoot": "C:\\Users\\jwain\\Documents\\Coding\\LawForumAssessment\\wwwroot\\",
+      "BasePath": "_content/LawForumAssessment",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\jwain\\Documents\\Coding\\LawForumAssessment\\wwwroot\\css\\style.css",
+      "SourceId": "LawForumAssessment",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\jwain\\Documents\\Coding\\LawForumAssessment\\wwwroot\\",
+      "BasePath": "_content/LawForumAssessment",
+      "RelativePath": "css/style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\style.css"
+    }
+  ]
+}
